@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beer Gram — Limited Time Offers</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 0;
+      background-color: #080808;
+      font-family: 'DM Sans', Arial, sans-serif;
+      color: #ffffff;
+      -webkit-font-smoothing: antialiased;
+    }
+    .email-wrapper { background-color: #080808; padding: 28px 12px 48px; }
+    .email-shell {
+      max-width: 640px; margin: 0 auto;
+      background: #111111; border-radius: 18px; overflow: hidden;
+      border: 1px solid #222222;
+      box-shadow: 0 0 80px rgba(209,15,122,0.12), 0 0 0 1px rgba(255,255,255,0.04);
+    }
+    .hero {
+      position: relative; text-align: center; overflow: hidden;
+    }
+    .hero-img { width: 100%; display: block; }
+    .hero-overlay {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(8,8,8,0.85) 0%, transparent 100%);
+      padding: 24px 36px 28px;
+    }
+    .pill-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #ffcc33, #ffaa00);
+      color: #0a0a0a;
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.5px;
+      padding: 7px 18px; border-radius: 999px; margin-bottom: 10px;
+    }
+    .hero-headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 54px; line-height: 1; letter-spacing: 2px;
+      color: #ffffff; margin: 0 0 6px 0;
+    }
+    .hero-headline span { color: #ffcc33; }
+    .hero-sub {
+      font-size: 15px; line-height: 24px; color: #dddddd;
+      margin: 0; font-weight: 400;
+    }
+    .hero-sub strong { color: #ffcc33; font-weight: 700; }
+    .countdown-strip {
+      background: linear-gradient(90deg, #d10f7a, #9c0dd4);
+      padding: 14px 28px; text-align: center;
+      font-size: 13px; font-weight: 600; letter-spacing: 0.8px;
+      text-transform: uppercase; color: #fff;
+    }
+    .countdown-strip span {
+      background: rgba(255,255,255,0.2);
+      padding: 3px 10px; border-radius: 4px; margin-left: 6px;
+    }
+    .section { padding: 36px 36px 32px; }
+    .section.dark { background: #111111; }
+    .section.light { background: #f4f4f5; }
+    .section.mid { background: #1a1a1a; }
+    .offer-card {
+      background: linear-gradient(135deg, #1c1c1c, #181018);
+      border: 1px solid #2a2a2a; border-radius: 14px;
+      padding: 26px 24px; margin-bottom: 14px;
+      position: relative; overflow: hidden;
+    }
+    .offer-card::before {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+    }
+    .offer-card.pink::before { background: linear-gradient(90deg, #d10f7a, #ff4db8); }
+    .offer-card.gold::before { background: linear-gradient(90deg, #ffcc33, #ff9900); }
+    .offer-number {
+      font-family: 'Bebas Neue', sans-serif; font-size: 72px; line-height: 1;
+      color: rgba(255,255,255,0.05); position: absolute; top: 8px; right: 20px;
+    }
+    .offer-tag { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 10px; }
+    .offer-tag.pink { color: #ff4db8; }
+    .offer-tag.gold { color: #ffcc33; }
+    .offer-title { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 1px; color: #ffffff; margin: 0 0 8px 0; }
+    .offer-desc { font-size: 15px; line-height: 24px; color: #9CFFB0;; margin: 0; }
+    .offer-desc strong { color: #ffffff; }
+    .feature-eyebrow { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #d10f7a; margin: 0 0 10px 0; }
+    .feature-headline { font-family: 'Bebas Neue', sans-serif; font-size: 38px; letter-spacing: 1px; color: #111111; line-height: 1.1; margin: 0 0 14px 0; }
+    .feature-headline.light { color: #ffffff; }
+    .feature-body { font-size: 15px; line-height: 25px; color: #444444; margin: 0 0 16px 0; }
+    .feature-body.light { color: #7DFFA1; }
+    .tag {
+      display: inline-block; font-size: 12px; font-weight: 600;
+      padding: 5px 12px; border-radius: 999px; margin: 4px 4px 4px 0;
+    }
+    .tag-row { margin-top: 14px; }
+    .btn-pink {
+      display: inline-block;
+      background: linear-gradient(135deg, #d10f7a, #a00d5f);
+      color: #ffffff; font-size: 16px; font-weight: 700;
+      padding: 16px 32px; border-radius: 10px;
+      text-decoration: none; letter-spacing: 0.3px;
+      box-shadow: 0 4px 24px rgba(209,15,122,0.35);
+    }
+    .btn-gold {
+      display: inline-block;
+      background: linear-gradient(135deg, #ffcc33, #ff9900);
+      color: #0a0a0a; font-size: 16px; font-weight: 700;
+      padding: 16px 32px; border-radius: 10px;
+      text-decoration: none; letter-spacing: 0.3px;
+      box-shadow: 0 4px 24px rgba(255,170,0,0.3);
+    }
+    .divider { height: 1px; background: linear-gradient(90deg, transparent, #2a2a2a, transparent); margin: 0; }
+    .divider.light { background: linear-gradient(90deg, transparent, #dddddd, transparent); }
+    .final-cta {
+      background: linear-gradient(160deg, #0f0f0f, #1f0820 50%, #2d0f4a 100%);
+      padding: 44px 36px 48px; text-align: center; position: relative; overflow: hidden;
+    }
+    .final-cta::before {
+      content: ''; position: absolute;
+      bottom: -80px; left: 50%; transform: translateX(-50%);
+      width: 480px; height: 300px;
+      background: radial-gradient(ellipse, rgba(209,15,122,0.15) 0%, transparent 70%);
+    }
+    .final-cta-headline { font-family: 'Bebas Neue', sans-serif; font-size: 44px; letter-spacing: 1.5px; color: #ffffff; margin: 0 0 12px 0; line-height: 1; }
+    .final-cta-sub { font-size: 16px; color: #aaaaaa; margin: 0 0 28px 0; line-height: 26px; }
+    .deadline-badge {
+      display: inline-block; border: 1.5px solid rgba(255,204,51,0.5);
+      background: rgba(255,204,51,0.08); color: #ffcc33;
+      font-size: 13px; font-weight: 700; padding: 6px 16px; border-radius: 6px;
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 24px;
+    }
+    .stat-box {
+      background: rgba(255,255,255,0.04); border: 1px solid #2a2a2a;
+      border-radius: 10px; padding: 18px 16px; text-align: center;
+    }
+    .stat-number { font-family: 'Bebas Neue', sans-serif; font-size: 40px; color: #ffcc33; line-height: 1; display: block; }
+    .stat-label { font-size: 12px; color: #5CFF8A;; display: block; margin-top: 4px; line-height: 18px; }
+    .zone-pill { background: #ffffff; border: 1.5px solid #e0e0e0; border-radius: 10px; padding: 14px; text-align: center; }
+    .zone-miles { font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: #d10f7a; line-height: 1; display: block; }
+    .zone-label { font-size: 11px; font-weight: 600; color: #111111; display: block; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .zone-desc { font-size: 12px; color: #777777; display: block; margin-top: 4px; line-height: 16px; }
+    .footer { background: #080808; padding: 24px 28px 28px; text-align: center; border-top: 1px solid #1a1a1a; }
+    .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; color: #ffffff; margin-bottom: 8px; }
+    .footer-tags { font-size: 12px; color: #555555; line-height: 20px; }
+    .footer-tags .ai { color: #d10f7a; font-weight: 700; }
+    /* Closure reasons section */
+    .closure-section {
+      background: linear-gradient(135deg, #0f0a00, #1a0a00);
+      border: 1px solid #3a2000;
+      border-radius: 14px; padding: 24px 22px; margin: 0 36px 8px;
+    }
+    .closure-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: #ffcc33; margin: 0 0 14px 0; letter-spacing: 1px; }
+    .closure-item { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+    .closure-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .closure-text { font-size: 13px; color: #cccccc; line-height: 20px; }
+    .closure-text strong { color: #ff9900; }
+    /* Feature grid */
+    .feat-grid-wrap { background: #111; padding: 0 36px 32px; }
+    .feat-category {
+      margin-bottom: 20px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid #222;
+      border-radius: 12px;
+      padding: 18px 20px;
+    }
+    .feat-cat-title {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1.3px; margin: 0 0 12px 0;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .feat-items { display: flex; flex-wrap: wrap; gap: 6px; }
+    .feat-item {
+      font-size: 12px; font-weight: 500;
+      padding: 4px 11px; border-radius: 999px;
+      background: rgba(255,255,255,0.06); color: #ccc;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    @media only screen and (max-width: 640px) {
+      .hero-headline { font-size: 38px; }
+      .section { padding: 28px 22px 24px; }
+      .final-cta { padding: 36px 22px 40px; }
+      .closure-section { margin: 0 22px 8px; }
+      .feat-grid-wrap { padding: 0 22px 28px; }
+    }
+  </style>
+</head>
+<body>
+<div class="email-wrapper">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr><td align="center">
+<table role="presentation" width="640" cellpadding="0" cellspacing="0" border="0" style="max-width:640px;width:100%;" class="email-shell">
+
+  <!-- HERO IMAGE (Image 3 - Time Running Out banner) -->
+  <tr>
+    <td class="hero">
+      <img src="\hero image.png" alt="Time Running Out on Beer Gram Offers" class="hero-img" />
+      <!-- <div class="pill-badge">⏳ Limited Time Offers</div>
+        <h1 class="hero-headline">Two Offers Expire<br><span>April 30, 2026</span></h1>
+        <p class="hero-sub">Miss the date — miss the deal. Simple as that.</p>
+      </div> --> 
+    </td>
+  </tr>
+
+  <!-- COUNTDOWN STRIP -->
+  <tr>
+    <td class="countdown-strip">
+      Both offers close on <span>April 30, 2026</span> — act before the tap runs dry
+    </td>
+  </tr>
+
+  <!-- OFFER CARDS -->
+  <tr>
+    <td class="section dark" style="padding-bottom:8px;">
+      <p style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#666;margin:0 0 18px 0;">What's on the table</p>
+      <div class="offer-card pink">
+        <div class="offer-number">01</div>
+        <p class="offer-tag pink">🍺 100% Free</p>
+        <h3 class="offer-title">List Your Brewery — Enter to Win a Free Year</h3>
+        <p class="offer-desc">Add your brewery to Beer Gram at no cost and you're automatically entered to <strong>win a free year of The Pint</strong> — our full marketing suite. No purchase. No catch.</p>
+      </div>
+      <div class="offer-card gold">
+        <div class="offer-number">02</div>
+        <p class="offer-tag gold">🍻 Buy 1, Get 1 Free Month</p>
+        <h3 class="offer-title">Subscribe to The Pint — Your Second Month Is on Us</h3>
+        <p class="offer-desc">Sign up for <strong>The Pint</strong> before April 30th and we'll give you <strong>your second month completely free</strong> — applied automatically at checkout. No promo code, no hoops to jump through.</p>
+      </div>
+    </td>
+  </tr>
+
+  <!-- CTA 1 -->
+  <tr>
+    <td class="section dark" style="padding-top:4px;padding-bottom:40px;text-align:center;">
+      <a href="https://beergram.com" target="_blank" class="btn-pink">Claim Your Brewery — It's Free →</a>
+    </td>
+  </tr>
+
+  <tr><td class="divider"></td></tr>
+
+  <!-- WHY BREWERIES CLOSE (2025 context) -->
+  <tr>
+    <td class="section dark" style="padding-bottom:16px;">
+      <p class="feature-eyebrow">The Stakes Are Real</p>
+      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:34px;letter-spacing:1px;color:#ffffff;margin:0 0 16px 0;line-height:1.1;">Why Breweries Are Closing<br><span style="color:#ff4db8;">At Record Rates in 2025</span></h2>
+    </td>
+  </tr>
+  <tr>
+    <td style="padding:0 36px 32px;">
+      <div class="closure-section">
+        <p class="closure-title">🔴 Key Reasons for Closures in 2025</p>
+        <div class="closure-item">
+          <span class="closure-icon">⚔️</span>
+          <p class="closure-text"><strong>Intense Competition &amp; Market Saturation:</strong> An oversaturated market makes it nearly impossible for smaller breweries to find a foothold.</p>
+        </div>
+        <div class="closure-item">
+          <span class="closure-icon">📈</span>
+          <p class="closure-text"><strong>Rising Costs:</strong> High labor, ingredient, and rent costs are squeezing profit margins to zero.</p>
+        </div>
+        <div class="closure-item">
+          <span class="closure-icon">📉</span>
+          <p class="closure-text"><strong>Shifting Consumer Habits:</strong> Consumers are drinking less alcohol or switching to other beverages — reducing demand for craft beer.</p>
+        </div>
+        <div class="closure-item">
+          <span class="closure-icon">💳</span>
+          <p class="closure-text"><strong>High Debt Loads:</strong> Many breweries are struggling to manage debt accumulated over the past few years.</p>
+        </div>
+        <div class="closure-item" style="margin-bottom:0;">
+          <span class="closure-icon">🚶</span>
+          <p class="closure-text"><strong>Decreased Taproom Traffic:</strong> Reduced foot traffic makes it harder for smaller taproom-focused breweries to remain profitable.</p>
+        </div>
+      </div>
+    </td>
+  </tr>
+
+  <tr><td class="divider"></td></tr>
+
+  <!-- WHY SMART BREWERIES MOVE NOW -->
+  <tr>
+    <td class="section light">
+      <p class="feature-eyebrow">Brewery Rescue Program</p>
+      <h2 class="feature-headline">Why Smart Breweries Are Moving Now</h2>
+      <p class="feature-body">Customers can't walk through your door if they don't know you exist. The craft beer market is more competitive than ever — yet most breweries are nearly invisible online. Beer Gram puts you on the map and keeps you there.</p>
+      <!-- <div class="tag-row">
+        <span class="tag" style="background:rgba(209,15,122,0.08);border:1px solid rgba(209,15,122,0.2);color:#d10f7a;">🍺 Digital Menus</span>
+        <span class="tag" style="background:rgba(209,15,122,0.08);border:1px solid rgba(209,15,122,0.2);color:#d10f7a;">📅 Event Promotion</span>
+        <span class="tag" style="background:rgba(209,15,122,0.08);border:1px solid rgba(209,15,122,0.2);color:#d10f7a;">📧 Email Marketing Tools</span>
+        <span class="tag" style="background:rgba(209,15,122,0.08);border:1px solid rgba(209,15,122,0.2);color:#d10f7a;">🎯 Customer Targeting</span>
+        <span class="tag" style="background:rgba(156,13,212,0.08);border:1px solid rgba(156,13,212,0.25);color:#9c0dd4;">📍 Brewery Listing &amp; Profile</span>
+        <span class="tag" style="background:rgba(156,13,212,0.08);border:1px solid rgba(156,13,212,0.25);color:#9c0dd4;">🗺️ 25-Mile Micro Marketing</span>
+        <span class="tag" style="background:rgba(156,13,212,0.08);border:1px solid rgba(156,13,212,0.25);color:#9c0dd4;">🔍 Local Search Visibility</span>
+        <span class="tag" style="background:rgba(156,13,212,0.08);border:1px solid rgba(156,13,212,0.25);color:#9c0dd4;">📢 Tap List Publishing</span>
+        <span class="tag" style="background:rgba(255,153,0,0.08);border:1px solid rgba(255,153,0,0.3);color:#cc7700;">📊 Brewery Analytics</span>
+        <span class="tag" style="background:rgba(255,153,0,0.08);border:1px solid rgba(255,153,0,0.3);color:#cc7700;">⭐ Review Management</span>
+        <span class="tag" style="background:rgba(255,153,0,0.08);border:1px solid rgba(255,153,0,0.3);color:#cc7700;">🎁 Deals &amp; Promotions</span>
+        <span class="tag" style="background:rgba(255,153,0,0.08);border:1px solid rgba(255,153,0,0.3);color:#cc7700;">👥 Loyalty Customer Base</span>
+        <span class="tag" style="background:rgba(209,15,122,0.15);border:1px solid rgba(209,15,122,0.5);color:#d10f7a;font-weight:800;font-size:13px;">✦ Half Pint AI</span>
+        <span class="tag" style="background:rgba(209,15,122,0.08);border:1px solid rgba(209,15,122,0.2);color:#d10f7a;">🤖 AI-Powered Recommendations</span>
+        <span class="tag" style="background:rgba(209,15,122,0.08);border:1px solid rgba(209,15,122,0.2);color:#d10f7a;">✍️ AI Content Generation</span>
+      </div> -->
+    </td>
+  </tr>
+
+  <tr><td class="divider light"></td></tr>
+
+  <!-- FULL FEATURE LIST -->
+  <tr>
+    <td style="background:#f4f4f5;padding:32px 36px 8px;">
+      <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#d10f7a;margin:0 0 8px 0;">Complete Platform</p>
+      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:1px;color:#111;margin:0 0 20px 0;">Everything Beer Gram Includes</h2>
+    </td>
+  </tr>
+  <tr>
+    <td style="background:#f4f4f5;padding:0 36px 32px;">
+
+      <!-- Visibility & Marketing -->
+      <div class="feat-category" style="background:#fff;border:1px solid #e0e0e0;">
+        <p class="feat-cat-title" style="color:#1f312d;">📊 Visibility &amp; Marketing Tools</p>
+        <div class="feat-items">
+          <span class="feat-item" style="background:#d1f5d4;color:#1f312d;border-color:#1f312d;">Digital Menu Boards</span>
+          <span class="feat-item" style="background:#d1f5d4;color:#1f312d;border-color:#1f312d;">Tap List Publishing</span>
+          <span class="feat-item" style="background:#d1f5d4;color:#1f312d;border-color:#1f312d;">Brewery Listing &amp; Profile</span>
+          <span class="feat-item" style="background:#d1f5d4;color:#1f312d;border-color:#1f312d;">Local Search Visibility</span>
+          <span class="feat-item" style="background:#d1f5d4;color:#1f312d;border-color:#1f312d;">25-Mile Micro Marketing</span>
+          <span class="feat-item" style="background:#d1f5d4;color:#1f312d;border-color:#1f312d;">Customer Targeting</span>
+          <span class="feat-item" style="background:#d1f5d4;color:#1f312d;border-color:#1f312d;">Event Promotion</span>
+          <span class="feat-item" style="background:#d1f5d4;color:#1f312d;border-color:#1f312d;">Deals &amp; Promotions</span>
+          <span class="feat-item" style="background:#d1f5d4;color:#1f312d;border-color:#1f312d;">Review Management</span>
+          <span class="feat-item" style="background:#d1f5d4;color:#1f312d;border-color:#1f312d;">Loyalty Customer Base</span>
+        </div>
+      </div>
+
+      <!-- Outreach -->
+      <div class="feat-category" style="background:#fff;border:1px solid #e0e0e0;">
+        <p class="feat-cat-title" style="color:#2500a0;">📧 Outreach &amp; Communication</p>
+        <div class="feat-items">
+          <span class="feat-item" style="background:#f5e8fc;color:#2500a0;border-color:#b096f9;">Email Marketing Campaigns</span>
+          <span class="feat-item" style="background:#f5e8fc;color:#2500a0;border-color:#b096f9;">Custom Funnel Flows</span>
+          <span class="feat-item" style="background:#f5e8fc;color:#2500a0;border-color:#b096f9;">Push Notifications</span>
+          <span class="feat-item" style="background:#f5e8fc;color:#2500a0;border-color:#b096f9;">Birthday Messages</span>
+          <span class="feat-item" style="background:#f5e8fc;color:#2500a0;border-color:#b096f9;">Group / Meet-Up Messages</span>
+          <span class="feat-item" style="background:#f5e8fc;color:#2500a0;border-color:#b096f9;">Direct Customer Messaging</span>
+          <span class="feat-item" style="background:#f5e8fc;color:#2500a0;border-color:#b096f9;">Announcement Broadcasting</span>
+          <span class="feat-item" style="background:#f5e8fc;color:#5132b8;border-color:#b096f9;">Event Notifications</span>
+        </div>
+      </div>
+
+      <!-- AI -->
+      <div class="feat-category" style="background:#fff;border:1px solid #e0e0e0;">
+        <p class="feat-cat-title" style="color:#d10f7a;">🤖 Half Pint AI Features</p>
+        <div class="feat-items">
+          <span class="feat-item" style="background:#fce8f3;color:#a0005a;border-color:#f0a0cc;font-weight:700;">✦ Half Pint AI Assistant</span>
+          <span class="feat-item" style="background:#fce8f3;color:#a0005a;border-color:#f0a0cc;">AI Content Generation</span>
+          <span class="feat-item" style="background:#fce8f3;color:#a0005a;border-color:#f0a0cc;">AI Customer Recommendations</span>
+          <span class="feat-item" style="background:#fce8f3;color:#a0005a;border-color:#f0a0cc;">AI Social Post Creation</span>
+          <span class="feat-item" style="background:#fce8f3;color:#a0005a;border-color:#f0a0cc;">AI Menu Updates</span>
+          <span class="feat-item" style="background:#fce8f3;color:#a0005a;border-color:#f0a0cc;">AI Product Catalog Mgmt</span>
+          <span class="feat-item" style="background:#fce8f3;color:#a0005a;border-color:#f0a0cc;">AI Customer Targeting</span>
+          <span class="feat-item" style="background:#fce8f3;color:#a0005a;border-color:#f0a0cc;">AI Automation Tools</span>
+        </div>
+      </div>
+
+      <!-- Sales -->
+      <div class="feat-category" style="background:#fff;border:1px solid #e0e0e0;">
+        <p class="feat-cat-title" style="color:#cc7700;">🍻 Sales &amp; Revenue Features</p>
+        <div class="feat-items">
+          <span class="feat-item" style="background:#fff8e8;color:#8a5000;border-color:#e8cc88;">Beer Gifting System</span>
+          <span class="feat-item" style="background:#fff8e8;color:#8a5000;border-color:#e8cc88;">Gift Redemption / QR Codes</span>
+          <span class="feat-item" style="background:#fff8e8;color:#8a5000;border-color:#e8cc88;">Product Catalog</span>
+          <span class="feat-item" style="background:#fff8e8;color:#8a5000;border-color:#e8cc88;">Event Ticket Sales</span>
+          <span class="feat-item" style="background:#fff8e8;color:#8a5000;border-color:#e8cc88;">Stripe Payments</span>
+          <span class="feat-item" style="background:#fff8e8;color:#8a5000;border-color:#e8cc88;">Promotions &amp; Coupons</span>
+          <span class="feat-item" style="background:#fff8e8;color:#8a5000;border-color:#e8cc88;">Referral System</span>
+          <span class="feat-item" style="background:#fff8e8;color:#8a5000;border-color:#e8cc88;">Customer Activity Tracking</span>
+        </div>
+      </div>
+
+      <!-- App & Dashboard -->
+      <div class="feat-category" style="background:#fff;border:1px solid #e0e0e0;">
+        <p class="feat-cat-title" style="color:#0070cc;">📱 App &amp; Dashboard System</p>
+        <div class="feat-items">
+          <span class="feat-item" style="background:#e8f4ff;color:#004488;border-color:#88bbee;">Brewery Dashboard Panel</span>
+          <span class="feat-item" style="background:#e8f4ff;color:#004488;border-color:#88bbee;">Mobile App Control</span>
+          <span class="feat-item" style="background:#e8f4ff;color:#004488;border-color:#88bbee;">Tablet Control</span>
+          <span class="feat-item" style="background:#e8f4ff;color:#004488;border-color:#88bbee;">Desktop Control</span>
+          <span class="feat-item" style="background:#e8f4ff;color:#004488;border-color:#88bbee;">Orders / Gift Management</span>
+          <span class="feat-item" style="background:#e8f4ff;color:#004488;border-color:#88bbee;">Event &amp; Product Creation</span>
+          <span class="feat-item" style="background:#e8f4ff;color:#004488;border-color:#88bbee;">Social Feed for Breweries</span>
+          <span class="feat-item" style="background:#e8f4ff;color:#004488;border-color:#88bbee;">Customer Profiles</span>
+        </div>
+      </div>
+
+      <!-- Social -->
+      <div class="feat-category" style="background:#fff;border:1px solid #e0e0e0;">
+        <p class="feat-cat-title" style="color:#008844;">🌐 Social &amp; Community</p>
+        <div class="feat-items">
+          <span class="feat-item" style="background:#e8f8ee;color:#006633;border-color:#88dd99;">Social Feed</span>
+          <span class="feat-item" style="background:#e8f8ee;color:#006633;border-color:#88dd99;">Follow Breweries</span>
+          <span class="feat-item" style="background:#e8f8ee;color:#006633;border-color:#88dd99;">Reviews &amp; Ratings</span>
+          <span class="feat-item" style="background:#e8f8ee;color:#006633;border-color:#88dd99;">Tagging Products</span>
+          <span class="feat-item" style="background:#e8f8ee;color:#006633;border-color:#88dd99;">Group Chats</span>
+          <span class="feat-item" style="background:#e8f8ee;color:#006633;border-color:#88dd99;">Event Groups</span>
+          <span class="feat-item" style="background:#e8f8ee;color:#006633;border-color:#88dd99;">Photo Galleries</span>
+          <span class="feat-item" style="background:#e8f8ee;color:#006633;border-color:#88dd99;">Hashtags &amp; Mentions</span>
+        </div>
+      </div>
+
+       <!-- Analytics -->
+<div class="feat-category" style="background:#fff;border:1px solid #e0e0e0;">
+  <p class="feat-cat-title" style="color:#555555;">📈 Analytics &amp; Data</p>
+  <div class="feat-items">
+    <span class="feat-item" style="background:#f0f0f5;color:#333355;border-color:#aaaacc;">Brewery Analytics</span>
+    <span class="feat-item" style="background:#f0f0f5;color:#333355;border-color:#aaaacc;">Customer Activity Tracking</span>
+    <span class="feat-item" style="background:#f0f0f5;color:#333355;border-color:#aaaacc;">Promotion Results</span>
+    <span class="feat-item" style="background:#f0f0f5;color:#333355;border-color:#aaaacc;">Gift Tracking</span>
+    <span class="feat-item" style="background:#f0f0f5;color:#333355;border-color:#aaaacc;">Event Performance</span>
+    <span class="feat-item" style="background:#f0f0f5;color:#333355;border-color:#aaaacc;">Customer Insights</span>
+  </div>
+
+    </td>
+  </tr>
+
+  <tr><td class="divider"></td></tr>
+
+  <!-- 25 MILE SYSTEM with Image 1 -->
+  <tr>
+  
+ 
+    <td style="background:#1a1a1a;">
+      <img src="\micro marketing.jpg" alt="The MicroMarketing Suite" style="width:100%;max-width:568px;display:block;margin:0 auto;" />
+    </td>
+  <tr>
+    <td class="section" style="background:#f0f0f2;padding-top:24px;padding-bottom:36px;">
+      <p class="feature-eyebrow">Micro Marketing System</p>
+      <h2 class="feature-headline">Why 25 Miles Works</h2>
+      <p class="feature-body" style="margin-bottom:22px;">Most taproom traffic comes from your own backyard. Beer Gram's three-zone targeting system reaches the right customers at exactly the right distance — from your daily regulars to destination visitors.</p>
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td width="32%" style="padding-right:8px;vertical-align:top;">
+            <div class="zone-pill" style="border-top:3px solid #d10f7a;">
+              <span class="zone-miles">5</span>
+              <span class="zone-label">Mile Core Zone</span>
+              <span class="zone-desc">Daily regulars &amp; loyal locals</span>
+            </div>
+          </td>
+          <td width="32%" style="padding:0 4px;vertical-align:top;">
+            <div class="zone-pill" style="border-top:3px solid #9c0dd4;">
+              <span class="zone-miles" style="color:#9c0dd4;">10–15</span>
+              <span class="zone-label">Mile Zone</span>
+              <span class="zone-desc">Weekend traffic &amp; groups</span>
+            </div>
+          </td>
+          <td width="32%" style="padding-left:8px;vertical-align:top;">
+            <div class="zone-pill" style="border-top:3px solid #ffaa00;">
+              <span class="zone-miles" style="color:#ffaa00;">25</span>
+              <span class="zone-label">Mile Zone</span>
+              <span class="zone-desc">Events &amp; traveling visitors</span>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr><td class="divider"></td></tr>
+
+  <!-- THE PINT OFFER with Image 2 -->
+  <tr>
+     <td style="background:#1a1a1a;">
+      <img src="\the pint.jpg" alt="The Pint Marketing Suite" style="width:100%;max-width:568px;display:block;margin:0 auto;" />
+    </td>
+  </tr>
+  <tr>
+    <td class="section mid" style="padding-top:24px;padding-bottom:0;">
+      <p style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#666;margin:0 0 16px 0;">Offer #2 — Paying Members</p>
+      <h2 class="feature-headline light" style="font-size:42px;margin-bottom:10px;">Subscribe to The Pint.<br>Pay for One Month,<br>Get Two.</h2>
+      <p class="feature-body light" style="margin-bottom:20px;">For a limited time, when you subscribe to <strong style="color:#ffffff;">The Pint</strong> before April 30th, your first month is charged normally — and your <strong style="color:#ffffff;">second month is completely free</strong>, credited automatically. No promo code, no hoops to jump through. Just subscribe before the deadline and it happens.</p>
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+        <tr>
+          <td width="48%" style="padding-right:8px;">
+            <div class="stat-box">
+              <span class="stat-number">2×</span>
+              <span class="stat-label">Months of access for the price of one</span>
+            </div>
+          </td>
+          <td width="48%" style="padding-left:8px;">
+            <div class="stat-box">
+              <span class="stat-number">APR 30</span>
+              <span class="stat-label">Hard deadline — offer ends at midnight</span>
+            </div>
+          </td>
+        </tr>
+      </table>
+      <div style="background:rgba(255,204,51,0.06);border:1px solid rgba(255,204,51,0.2);border-radius:12px;padding:20px 22px;margin-bottom:24px;">
+        <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#ffcc33;margin:0 0 14px 0;">✦ Everything Included in The Pint</p>
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+          <tr>
+            <td width="50%" style="vertical-align:top;padding-right:10px;">
+              <p style="font-size:13px;color:#cccccc;margin:0 0 8px 0;line-height:20px;">✅ &nbsp;Full Brewery Profile</p>
+              <p style="font-size:13px;color:#cccccc;margin:0 0 8px 0;line-height:20px;">✅ &nbsp;Digital Tap Menu</p>
+              <p style="font-size:13px;color:#cccccc;margin:0 0 8px 0;line-height:20px;">✅ &nbsp;Email Marketing Suite</p>
+              <p style="font-size:13px;color:#cccccc;margin:0 0 8px 0;line-height:20px;">✅ &nbsp;Event Promotion Tools</p>
+              <p style="font-size:13px;color:#cccccc;margin:0;line-height:20px;">✅ &nbsp;25-Mile Micro Targeting</p>
+            </td>
+            <td width="50%" style="vertical-align:top;padding-left:10px;">
+              <p style="font-size:13px;color:#cccccc;margin:0 0 8px 0;line-height:20px;">✅ &nbsp;Deals &amp; Promotions</p>
+              <p style="font-size:13px;color:#cccccc;margin:0 0 8px 0;line-height:20px;">✅ &nbsp;Review Management</p>
+              <p style="font-size:13px;color:#cccccc;margin:0 0 8px 0;line-height:20px;">✅ &nbsp;Brewery Analytics</p>
+              <p style="font-size:13px;color:#cccccc;margin:0 0 8px 0;line-height:20px;">✅ &nbsp;Local Search Visibility</p>
+              <p style="font-size:13px;color:#ffcc33;margin:0;line-height:20px;font-weight:700;">✦ &nbsp;Half Pint AI Access</p>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div style="text-align:center;padding-bottom:32px;">
+        <div style="display:inline-block;background:linear-gradient(135deg,#ffcc33,#ff9900);border-radius:10px;padding:4px;">
+          <div style="background:#1a1a1a;border-radius:8px;padding:18px 32px;">
+            <p style="margin:0;font-size:13px;color:#888;text-transform:uppercase;letter-spacing:1px;font-weight:600;">Limited Time Deal</p>
+            <p style="margin:6px 0 2px;font-family:'Bebas Neue',sans-serif;font-size:48px;color:#ffcc33;line-height:1;letter-spacing:2px;">2 FOR 1</p>
+            <p style="margin:0;font-size:13px;color:#aaaaaa;">Pay Month 1 &nbsp;·&nbsp; Month 2 is <strong style="color:#ffffff;">FREE</strong> — automatically</p>
+          </div>
+        </div>
+      </div>
+    </td>
+  </tr>
+
+  <!-- FINAL CTA -->
+  <tr>
+    <td class="final-cta">
+      <div class="deadline-badge">⚡ Both Offers Expire April 30, 2026</div>
+      <h2 class="final-cta-headline">Last Call — Don't Miss It</h2>
+      <p class="final-cta-sub">List your brewery for free and enter to win a year on us — or subscribe to The Pint and get month two at no charge. Two offers. One deadline. Zero excuses.<br><br>Everything starts at <strong style="color:#ffffff;">beergram.com</strong></p>
+      <a href="https://beergram.com" target="_blank" class="btn-gold">Get Started with Beer Gram →</a>
+    </td>
+  </tr>
+
+  <!-- FOOTER -->
+  <tr>
+    <td class="footer">
+      <div class="footer-logo">Beer Gram™</div>
+      <p class="footer-tags">
+        Brewery Rescue Program &nbsp;·&nbsp; Digital Menus &nbsp;·&nbsp; Micro Marketing &nbsp;·&nbsp; <span class="ai">Half Pint AI</span>
+      </p>
+      <p style="margin:12px 0 0;font-size:11px;color:#333333;">
+        © 2026 Beer Gram. All rights reserved.<br>
+        <a href="https://beergram.com" style="color:#555555;text-decoration:underline;">beergram.com</a>
+      </p>
+      <p style="margin:16px 0 0;font-size:11px;color:#333333;line-height:18px;">
+        You're receiving this email because you signed up for Beer Gram updates.<br>
+        <a href="https://beergram.com/unsubscribe" style="color:#d10f7a;text-decoration:underline;font-weight:600;">Unsubscribe</a> &nbsp;·&nbsp;
+
+        <!-- <a href="https://dev.beergram.com/preferences" style="color:#555555;text-decoration:underline;">Manage Preferences</a> &nbsp;·&nbsp;
+        <a href="https://dev.beergram.com/privacy" style="color:#555555;text-decoration:underline;">Privacy Policy</a> -->
+      </p>
+    </td>
+  </tr>
+
+</table>
+</td></tr>
+</table>
+</div>
+</body>
+</html>
